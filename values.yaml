@@ -1,0 +1,6 @@
+platform:
+  imagePullSecrets:
+    - name: iot4h-pullsecret
+portal:
+  imagePullSecrets:
+    - name: iot4h-pullsecret

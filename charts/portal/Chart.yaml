@@ -1,0 +1,7 @@
+apiVersion: v2
+name: portal
+description: Iot4H Portal
+
+type: application
+version: 0.1.0
+appVersion: "0.0.4"
