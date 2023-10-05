@@ -88,3 +88,4 @@ env:
   TB_QUEUE_TYPE: "in-memory"
   MQTT_ENABLED: "true"
 
+upgradeFromVersion: false

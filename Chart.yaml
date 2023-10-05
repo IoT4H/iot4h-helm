@@ -25,8 +25,8 @@ appVersion: "3.5.1"
 
 dependencies:
   - name: platform
-    version: 1.0.0
+    version: 0.1.0
     repository: file://./charts/platform
- # - name: portal
- #   version: 0.0.0
- #   repository: file://./charts/portal
+  - name: portal
+    version: 0.1.0
+    repository: file://./charts/portal

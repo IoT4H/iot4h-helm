@@ -2,5 +2,8 @@ dependencies:
 - name: platform
   repository: file://./charts/platform
   version: 0.1.0
-digest: sha256:23f6afe9fc35f2661ad5cd3ed597e0fe183be8562965cbdbb5289715ed92acf0
-generated: "2023-10-02T16:14:07.103867+02:00"
+- name: portal
+  repository: file://./charts/portal
+  version: 0.1.0
+digest: sha256:1b06099b6cd3fa141db2ee3f005238cc54de39f28cffe4fcf42721af5c886e71
+generated: "2023-10-05T09:09:48.931081+02:00"

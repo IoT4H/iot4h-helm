@@ -36,7 +36,7 @@ spec:
         - name: {{ include "..fullname" . }}-log
           persistentVolumeClaim:
             claimName: {{ include "..fullname" . }}-log
-      {{- if .Values.upgradeFromVersion | default false }}
+      {{- if .Values.upgradeFromVersion }}
       initContainers:
         - name: {{ .Chart.Name }}-upgrade
           securityContext:
