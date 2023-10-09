@@ -1,3 +1,20 @@
+
+
+postgresql:
+  primary:
+    persistence:
+      size: 10Gi
+  architecture: standalone
+  auth:
+    database: strapi
+    username:  strapi
+    existingSecret: iot4h-portal-api
+    secretKeys:
+      #checkov:skip=CKV_SECRET_6: not an actual secret
+      userPasswordKey: DATABASE_PASSWORD
+      adminPasswordKey: DATABASE_PASSWORD
+
+
 platform:
   ingress:
     annotations:

@@ -30,3 +30,6 @@ dependencies:
   - name: portal
     version: 0.1.0
     repository: file://./charts/portal
+  - name: postgresql
+    version: 11.6.19
+    repository: https://charts.bitnami.com/bitnami

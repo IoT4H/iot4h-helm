@@ -84,10 +84,9 @@ tolerations: []
 affinity: {}
 api_env:
   STRAPI_URL: "https://portal.iot4h.de/api"
-  DATABASE_HOST: 'portaldb'
+  DATABASE_HOST: 'iot4h-postgresql'
   NODE_ENV: 'production'
-  DATABASE_CLIENT: 'sqlite'
-  #DATABASE_CLIENT: 'postgres'
+  DATABASE_CLIENT: 'postgres'
   APP_KEYS: "{}"
   API_TOKEN_SALT: "DEV"
 

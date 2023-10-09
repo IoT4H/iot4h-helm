@@ -5,5 +5,8 @@ dependencies:
 - name: portal
   repository: file://./charts/portal
   version: 0.1.0
-digest: sha256:1b06099b6cd3fa141db2ee3f005238cc54de39f28cffe4fcf42721af5c886e71
-generated: "2023-10-05T09:09:48.931081+02:00"
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 11.6.19
+digest: sha256:e3e01e57fca2e2bdde71a4b36d74c55375eabeffca8f7d6f4b86c7ba7fc012b9
+generated: "2023-10-09T13:58:55.064784+02:00"
