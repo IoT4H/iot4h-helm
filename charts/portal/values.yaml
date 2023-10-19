@@ -97,4 +97,4 @@ api_env:
   API_TOKEN_SALT: "DEV"
 
 ui_env:
-  NEXT_PUBLIC_STRAPI_API_URL: "/api"
+  NEXT_PUBLIC_STRAPI_API_URL: "https://portal.iot4h.de/api"
