@@ -1,0 +1,15 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "api-public" . }}
+  labels:
+    {{- include "..labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistence.storage | default "10Gi" }}
+  {{- if .Values.persistence.storageClassName | default "" }}
+  storageClassName: {{ .Values.persistence.storageClassName }}
+  {{- end }}

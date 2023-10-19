@@ -82,6 +82,11 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+persistence: {}
+# storageClassName: local-path
+# storage: 10Gi
+
 api_env:
   STRAPI_URL: "https://portal.iot4h.de/api"
   DATABASE_HOST: 'iot4h-postgresql'
