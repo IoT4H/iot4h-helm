@@ -50,7 +50,7 @@ ingress:
   hosts:
     - host: portal.iot4h.de
       paths:
-        - path: /
+        - path: /api
           pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
