@@ -1,17 +1,4 @@
 {{- if .Values.ingress.enabled -}}
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: {{ include "..fullname" . }}-strip-api
-  namespace: {{ .Release.Namespace }}
-  labels:
-    {{- include "..labels" . | nindent 4 }}
-spec:
-  stripPrefix:
-    prefixes:
-      - /api
-
----
 {{- $fullNameUI := printf "%s-%s" (include "..fullname" .)  "ui" -}}
 {{- $fullNameAPI := printf "%s-%s" (include "..fullname" .) "api" -}}
 {{- $svcPortUI := .Values.service.port_ui -}}
@@ -60,7 +47,7 @@ spec:
       http:
         paths:
           {{- range .paths }}
-          - path: {{ .path }}api
+          - path: {{ .path }}strapi
         {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
             pathType: {{ .pathType }}
         {{- end }}
