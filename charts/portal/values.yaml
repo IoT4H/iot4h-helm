@@ -48,10 +48,8 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: portal.iot4h.de
-      paths:
-        - path: /
-          pathType: Prefix
+    api: portal-api.iot4h.de
+    portal: portal.iot4h.de
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
