@@ -34,6 +34,7 @@ metadata:
   labels:
     {{- include "..labels" . | nindent 4 }}
   annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: {{ .Release.Namespace }}-{{ include "..fullname" . }}-strip-api@kubernetescrd
   {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
