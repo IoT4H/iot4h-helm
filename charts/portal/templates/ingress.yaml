@@ -1,5 +1,17 @@
 {{- if .Values.ingress.enabled -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ include "..fullname" . }}-strip-api
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "..labels" . | nindent 4 }}
+spec:
+  stripPrefix:
+    prefixes:
+      - /strapi
 
+---
 {{- $fullNameUI := printf "%s-%s" (include "..fullname" .)  "ui" -}}
 {{- $fullNameAPI := printf "%s-%s" (include "..fullname" .) "api" -}}
 {{- $svcPortUI := .Values.service.port_ui -}}

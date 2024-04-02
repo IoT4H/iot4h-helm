@@ -87,7 +87,8 @@ persistence: {}
 # storageClassName: local-path
 # storage: 10Gi
 api_env:
-  STRAPI_URL: "https://portal.iot4h.de/api"
+  STRAPI_ADMIN_BACKEND_URL: '/strapi'
+  STRAPI_URL: '/'
   DATABASE_HOST: 'iot4h-postgresql'
   NODE_ENV: 'production'
   DATABASE_CLIENT: 'postgres'
