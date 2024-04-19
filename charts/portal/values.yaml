@@ -87,6 +87,9 @@ persistence: {}
 api_env:
   STRAPI_ADMIN_BACKEND_URL: '/strapi'
   STRAPI_URL: '/'
+  THINGSBOARD_URL: 'https://platform.iot4h.de'
+  THINGSBOARD_SYSADMIN: 'sysadmin@thingsboard.org'
+  THINGSBOARD_PASSWORD: 'sysadmin'
   DATABASE_HOST: 'iot4h-postgresql'
   NODE_ENV: 'production'
   DATABASE_CLIENT: 'postgres'
@@ -94,4 +97,5 @@ api_env:
   API_TOKEN_SALT: "DEV"
 
 ui_env:
-  NEXT_PUBLIC_STRAPI_API_URL: "https://portal.iot4h.de/api"
+  FRONTEND_STRAPI_API_URL: "https://portal-api.iot4h.de/"
+  SERVER_STRAPI_API_URL: "https://portal-api.iot4h.de/"
