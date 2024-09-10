@@ -1,17 +1,4 @@
 {{- if .Values.ingress.enabled -}}
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: {{ include "..fullname" . }}-strip-api
-  namespace: {{ .Release.Namespace }}
-  labels:
-    {{- include "..labels" . | nindent 4 }}
-spec:
-  stripPrefix:
-    prefixes:
-      - /api
-
----
 {{- $fullNameUI := printf "%s-%s" (include "..fullname" .)  "ui" -}}
 {{- $fullNameAPI := printf "%s-%s" (include "..fullname" .) "api" -}}
 {{- $svcPortUI := .Values.service.port_ui -}}
@@ -34,7 +21,6 @@ metadata:
   labels:
     {{- include "..labels" . | nindent 4 }}
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: {{ .Release.Namespace }}-{{ include "..fullname" . }}-strip-api@kubernetescrd
   {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -53,30 +39,29 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
-
-
-    - host: {{ .host | quote }}
+    - host: {{ .Values.ingress.hosts.api | quote }}
       http:
         paths:
-          {{- range .paths }}
-          - path: {{ .path }}api
-        {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
-            pathType: {{ .pathType }}
-        {{- end }}
+          - path: /
+            {{- if (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+            pathType: Prefix
+            {{- end }}
             backend:
-          {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
                 name: {{ $fullNameAPI }}
                 port:
                   number: {{ $svcPortAPI }}
-          {{- else }}
+               {{- else }}
               serviceName: {{ $fullNameAPI }}
               servicePort: {{ $svcPortAPI }}
-          {{- end }}
-          - path: {{ .path }}
-            {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
-            pathType: {{ .pathType }}
+              {{- end }}
+    - host: {{ .Values.ingress.hosts.portal | quote }}
+      http:
+        paths:
+          - path: /
+            {{- if (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+            pathType: Prefix
             {{- end }}
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
@@ -84,10 +69,8 @@ spec:
                 name: {{ $fullNameUI }}
                 port:
                   number: {{ $svcPortUI }}
-              {{- else }}
+               {{- else }}
               serviceName: {{ $fullNameUI }}
               servicePort: {{ $svcPortUI }}
               {{- end }}
-          {{- end }}
-    {{- end }}
 {{- end }}

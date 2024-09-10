@@ -31,6 +31,7 @@ portal:
       cert-manager.io/cluster-issuer: "letsencrypt-issuer"
     tls:
       - hosts:
+          - portal-api.iot4h.de
           - portal.iot4h.de
         secretName: portal.iot4h.de
   imagePullSecrets:

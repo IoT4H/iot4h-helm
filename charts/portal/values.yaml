@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/iot4h
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
@@ -48,10 +48,8 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: portal.iot4h.de
-      paths:
-        - path: /
-          pathType: Prefix
+    api: portal-api.iot4h.de
+    portal: portal.iot4h.de
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -87,7 +85,11 @@ persistence: {}
 # storageClassName: local-path
 # storage: 10Gi
 api_env:
-  STRAPI_URL: "https://portal.iot4h.de/api"
+  STRAPI_ADMIN_BACKEND_URL: '/strapi'
+  STRAPI_URL: '/'
+  THINGSBOARD_URL: 'https://platform.iot4h.de'
+  THINGSBOARD_SYSADMIN: 'sysadmin@thingsboard.org'
+  THINGSBOARD_PASSWORD: 'sysadmin'
   DATABASE_HOST: 'iot4h-postgresql'
   NODE_ENV: 'production'
   DATABASE_CLIENT: 'postgres'
@@ -95,4 +97,5 @@ api_env:
   API_TOKEN_SALT: "DEV"
 
 ui_env:
-  NEXT_PUBLIC_STRAPI_API_URL: "https://portal.iot4h.de/api"
+  FRONTEND_STRAPI_API_URL: "https://portal-api.iot4h.de/"
+  SERVER_STRAPI_API_URL: "https://portal-api.iot4h.de/"
