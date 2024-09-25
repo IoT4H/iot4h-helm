@@ -40,6 +40,7 @@ service:
   type: ClusterIP
   port_ui: 3000
   port_api: 1337
+  port_littlefs: 3001
 
 ingress:
   enabled: true
@@ -96,6 +97,10 @@ api_env:
   APP_KEYS: "{}"
   API_TOKEN_SALT: "DEV"
 
+littlefs_env:
+  NODE_ENV: 'production'
+
 ui_env:
   FRONTEND_STRAPI_API_URL: "https://portal-api.iot4h.de/"
   SERVER_STRAPI_API_URL: "https://portal-api.iot4h.de/"
+  LITTLEFS_API_URL: "https://portal-api.iot4h.de/littlefs.bin"

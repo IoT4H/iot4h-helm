@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "..fullname" . }}-api
+  name: {{ include "..fullname" . }}-littlefs
   labels:
     {{- include "..labels" . | nindent 4 }}
 spec:
@@ -10,7 +10,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "..selectorLabels-api" . | nindent 6 }}
+      {{- include "..selectorLabels-littlefs" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -20,7 +20,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "..selectorLabels-api" . | nindent 8 }}
+        {{- include "..selectorLabels-littlefs" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -33,14 +33,11 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}/portal-api:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          volumeMounts:
-            - mountPath: /opt/app/public/uploads
-              name: {{ include "api-public" . }}
+          image: "{{ .Values.image.repository }}/portal-littlefs-creator:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port_api }}
+              containerPort: {{ .Values.service.port_littlefs }}
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -54,14 +51,9 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name:  {{ include "..fullname" . }}-api
+                name:  {{ include "..fullname" . }}-littlefs
             - secretRef:
-                name: {{ include "..fullname" . }}-api
-
-      volumes:
-      - name: {{ include "api-public" . }}
-        persistentVolumeClaim:
-          claimName: {{ include "api-public" . }}
+                name: {{ include "..fullname" . }}-littlefs
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
