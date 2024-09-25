@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/env: {{ toJson .Values.api_env | sha256sum | trunc 63 }}
+        checksum/env: {{ toJson .Values.littlefs_env | sha256sum | trunc 63 }}
       {{- with .Values.podAnnotations }}
 
         {{- toYaml . | nindent 8 }}
