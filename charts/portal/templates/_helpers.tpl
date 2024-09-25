@@ -59,6 +59,11 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/component: {{ include "..name" . }}-api
 {{- end }}
 
+{{- define "..selectorLabels-littlefs"  -}}
+{{ include "..selectorLabels" . }}
+app.kubernetes.io/component: {{ include "..name" . }}-littlefs
+{{- end }}
+
 {{- define "..selectorLabels-ui"  -}}
 {{ include "..selectorLabels" . }}
 app.kubernetes.io/component: {{ include "..name" . }}-ui
@@ -74,5 +79,3 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-
