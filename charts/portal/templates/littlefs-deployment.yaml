@@ -52,8 +52,6 @@ spec:
           envFrom:
             - configMapRef:
                 name:  {{ include "..fullname" . }}-littlefs
-            - secretRef:
-                name: {{ include "..fullname" . }}-littlefs
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
