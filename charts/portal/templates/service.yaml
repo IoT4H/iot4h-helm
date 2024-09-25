@@ -44,4 +44,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "..selectorLabels-api" . | nindent 4 }}
+    {{- include "..selectorLabels-littlefs" . | nindent 4 }}
