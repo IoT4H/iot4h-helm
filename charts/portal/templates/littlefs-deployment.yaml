@@ -14,9 +14,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/env: {{ toJson .Values.littlefs_env | sha256sum | trunc 63 }}
+        checksum/env: {{ toJson .Values.api_env | sha256sum | trunc 63 }}
       {{- with .Values.podAnnotations }}
-
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -39,14 +38,6 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port_littlefs }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
