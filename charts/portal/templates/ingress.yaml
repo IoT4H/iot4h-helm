@@ -44,7 +44,7 @@ spec:
     - host: {{ .Values.ingress.hosts.api | quote }}
       http:
         paths:
-          - path: /littlefs.bin
+          - path: /creator
           {{- if (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
             pathType: Prefix
           {{- end }}
