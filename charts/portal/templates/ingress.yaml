@@ -21,7 +21,7 @@ kind: Ingress
 metadata:
   name: {{ include "..fullname" . }}
   labels:
-    {{- include "..labels" . | nindent 4 }}
+    {{- include "..labels-common" . | nindent 4 }}
   annotations:
   {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}

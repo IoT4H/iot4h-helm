@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "..fullname" . }}-ui
   labels:
-    {{- include "..labels" . | nindent 4 }}
+    {{- include "..labels-ui" . | nindent 4 }}
 data:
   {{- toYaml .Values.ui_env | nindent 2 }}
 

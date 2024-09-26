@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "..fullname" . }}-api
   labels:
-    {{- include "..labels" . | nindent 4 }}
+    {{- include "..labels-api" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -20,7 +20,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "..selectorLabels-api" . | nindent 8 }}
+        {{- include "..labels-api" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

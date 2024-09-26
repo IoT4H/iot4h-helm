@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "..fullname" . }}-ui
   labels:
-    {{- include "..labels" . | nindent 4 }}
+    {{- include "..labels-ui" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -19,7 +19,7 @@ kind: Service
 metadata:
   name: {{ include "..fullname" . }}-api
   labels:
-    {{- include "..labels" . | nindent 4 }}
+    {{- include "..labels-ui" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -35,7 +35,7 @@ kind: Service
 metadata:
   name: {{ include "..fullname" . }}-littlefs
   labels:
-    {{- include "..labels" . | nindent 4 }}
+    {{- include "..labels-api" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
