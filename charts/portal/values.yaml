@@ -103,4 +103,4 @@ littlefs_env:
 ui_env:
   FRONTEND_STRAPI_API_URL: "https://portal-api.iot4h.de/"
   SERVER_STRAPI_API_URL: "https://portal-api.iot4h.de/"
-  LITTLEFS_API_URL: "https://portal-api.iot4h.de/creator/littlefs.bin"
+  LITTLEFS_API_URL: "https://portal-api.iot4h.de/littlefs.bin"
