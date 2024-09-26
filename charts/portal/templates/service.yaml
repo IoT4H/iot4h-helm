@@ -1,47 +1,20 @@
+
+{{- $services := dict "api" .Values.service.port_api "ui" .Values.service.port_ui "littlefs" .Values.service.port_littlefs }}
+{{- range $service, $servicePort := $services}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "..fullname" . }}-ui
+  name: {{ include "..fullname" $ }}-{{ $service }}
   labels:
-    {{- include "..labels-ui" . | nindent 4 }}
+    {{- include (printf "..labels-%s" $service) $ | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ $.Values.service.type }}
   ports:
-    - port: {{ .Values.service.port_ui }}
+    - port: {{ $servicePort }}
       targetPort: http
       protocol: TCP
       name: http
   selector:
-    {{- include "..selectorLabels-ui" . | nindent 4 }}
+    {{- include (printf "..selectorLabels-%s" $service) $ | nindent 4 }}
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "..fullname" . }}-api
-  labels:
-    {{- include "..labels-ui" . | nindent 4 }}
-spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port_api }}
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    {{- include "..selectorLabels-api" . | nindent 4 }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "..fullname" . }}-littlefs
-  labels:
-    {{- include "..labels-api" . | nindent 4 }}
-spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port_littlefs }}
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    {{- include "..selectorLabels-littlefs" . | nindent 4 }}
+{{- end}}
