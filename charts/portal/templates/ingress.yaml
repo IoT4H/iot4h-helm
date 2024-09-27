@@ -1,8 +1,10 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullNameUI := printf "%s-%s" (include "..fullname" .)  "ui" -}}
 {{- $fullNameAPI := printf "%s-%s" (include "..fullname" .) "api" -}}
+{{- $fullNameLittlefs := printf "%s-%s" (include "..fullname" .) "littlefs" -}}
 {{- $svcPortUI := .Values.service.port_ui -}}
 {{- $svcPortAPI := .Values.service.port_api -}}
+{{- $svcPortLittlefs := .Values.service.port_littlefs -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
   {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
@@ -19,7 +21,7 @@ kind: Ingress
 metadata:
   name: {{ include "..fullname" . }}
   labels:
-    {{- include "..labels" . | nindent 4 }}
+    {{- include "..labels-common" . | nindent 4 }}
   annotations:
   {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
@@ -39,6 +41,23 @@ spec:
     {{- end }}
   {{- end }}
   rules:
+    - host: {{ .Values.ingress.hosts.api | quote }}
+      http:
+        paths:
+          - path: /littlefs.bin
+          {{- if (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+            pathType: Prefix
+          {{- end }}
+            backend:
+            {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullNameLittlefs }}
+                port:
+                  number: {{ $svcPortLittlefs }}
+             {{- else }}
+              serviceName: {{ $fullNameLittlefs }}
+              servicePort: {{ $svcPortLittlefs }}
+            {{- end }}
     - host: {{ .Values.ingress.hosts.api | quote }}
       http:
         paths:
