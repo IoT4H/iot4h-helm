@@ -1,26 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "..fullname" . }}-api
+  name: {{ include "..fullname" . }}-littlefs
   labels:
-    {{- include "..labels-api" . | nindent 4 }}
+    {{- include "..labels-littlefs" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "..selectorLabels-api" . | nindent 6 }}
+      {{- include "..selectorLabels-littlefs" . | nindent 6 }}
   template:
     metadata:
       annotations:
         checksum/env: {{ toJson .Values.api_env | sha256sum | trunc 63 }}
       {{- with .Values.podAnnotations }}
-
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "..labels-api" . | nindent 8 }}
+        {{- include "..labels-littlefs" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -33,35 +32,25 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}/portal-api:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          volumeMounts:
-            - mountPath: /opt/app/public/uploads
-              name: {{ include "api-public" . }}
+          image: "{{ .Values.image.repository }}/portal-littlefs-creator:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port_api }}
+              containerPort: {{ .Values.service.port_littlefs }}
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /littlefs.bin
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /littlefs.bin
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name:  {{ include "..fullname" . }}-api
-            - secretRef:
-                name: {{ include "..fullname" . }}-api
-
-      volumes:
-      - name: {{ include "api-public" . }}
-        persistentVolumeClaim:
-          claimName: {{ include "api-public" . }}
+                name:  {{ include "..fullname" . }}-littlefs
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

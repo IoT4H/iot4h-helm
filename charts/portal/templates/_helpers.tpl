@@ -37,31 +37,52 @@ Create chart name and version as used by the chart label.
 {{/*
 Common labels
 */}}
-{{- define "..labels" -}}
+{{- define "..labels-common" -}}
 helm.sh/chart: {{ include "..chart" . }}
-{{ include "..selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
+
+
+{{- define "..labels-ui" -}}
+{{ include "..labels-common" . }}
+{{ include "..selectorLabels-ui" . }}
+{{- end }}
+
+{{- define "..labels-api" -}}
+{{ include "..labels-common" . }}
+{{ include "..selectorLabels-api" . }}
+{{- end }}
+
+{{- define "..labels-littlefs" -}}
+{{ include "..labels-common" . }}
+{{ include "..selectorLabels-littlefs" . }}
+{{- end }}
+
 {{/*
 Selector labels
 */}}
-{{- define "..selectorLabels"  -}}
+{{- define "..selectorLabels-common"  -}}
 app.kubernetes.io/name: {{ include "..name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{- define "..selectorLabels-api"  -}}
-{{ include "..selectorLabels" . }}
 app.kubernetes.io/component: {{ include "..name" . }}-api
+{{ include "..selectorLabels-common" . }}
+{{- end }}
+
+{{- define "..selectorLabels-littlefs"  -}}
+app.kubernetes.io/component: {{ include "..name" . }}-littlefs
+{{ include "..selectorLabels-common" . }}
 {{- end }}
 
 {{- define "..selectorLabels-ui"  -}}
-{{ include "..selectorLabels" . }}
 app.kubernetes.io/component: {{ include "..name" . }}-ui
+{{ include "..selectorLabels-common" . }}
 {{- end }}
 
 {{/*
@@ -74,5 +95,3 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-

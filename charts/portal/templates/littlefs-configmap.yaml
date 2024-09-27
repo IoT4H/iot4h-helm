@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "..fullname" . }}-littlefs
+  labels:
+    {{- include "..labels-littlefs" . | nindent 4 }}
+data:
+  {{- toYaml .Values.littlefs_env | nindent 2 }}
